@@ -1,16 +1,23 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import './ipcMain'
 
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 300,
     height: 300,
+    minWidth: 250,
+    minHeight: 250,
+    maxHeight: 500,
+    maxWidth: 500,
     show: false,
     x: 1500,
     y: 200,
+    frame: false,
+    transparent: true,
     acceptFirstMouse: true,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -20,6 +27,8 @@ function createWindow(): void {
     }
   })
 
+  mainWindow.setAspectRatio(1)
+
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
@@ -28,6 +37,8 @@ function createWindow(): void {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
+
+  mainWindow.webContents.openDevTools()
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.

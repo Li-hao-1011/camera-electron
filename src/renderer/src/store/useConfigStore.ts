@@ -17,7 +17,7 @@ export const useConfigStore = defineStore(
     const config = ref<ConfigType>({
       deviceId: '',
       page: Page.Setting,
-      borderWidth: '1px',
+      borderWidth: '0px',
       borderColor: 'pink',
       rounded: true
     })

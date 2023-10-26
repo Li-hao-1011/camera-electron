@@ -34,7 +34,7 @@ const quit = () => {
 
         <div
           v-show="config.page === Page.Camera"
-          class="setting-icon text-black opacity-80 absolute left-1/2 -translate-x-1/2 bottom-3 mt-3 cursor-pointer z-10"
+          class="setting-icon text-black opacity-80 absolute left-1/2 -translate-x-1/2 bottom-3 mt-3 cursor-pointer z-10 hidden group-hover:block"
           @click="config.rounded = !config.rounded"
         >
           <Square v-if="config.rounded" theme="outline" size="24" />

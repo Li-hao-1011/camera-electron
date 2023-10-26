@@ -19,7 +19,7 @@ export const useConfigStore = defineStore(
       page: Page.Setting,
       borderWidth: '1px',
       borderColor: 'pink',
-      rounded: false
+      rounded: true
     })
 
     return { config }

@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: camera-electron
+appId: com.lihao.camera-electron
+productName: FairyEye
 directories:
   buildResources: build
 files:

@@ -4,6 +4,9 @@ const preload = require("@electron-toolkit/preload");
 const api = {
   quit: () => {
     electron.ipcRenderer.send("quit");
+  },
+  drag: (opt) => {
+    electron.ipcRenderer.invoke("drag", opt);
   }
 };
 if (process.contextIsolated) {

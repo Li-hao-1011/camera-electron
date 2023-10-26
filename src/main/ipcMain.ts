@@ -1,6 +1,6 @@
 import { Menu, MenuItemConstructorOptions, app, ipcMain } from 'electron'
 
-ipcMain.on('quit', (event) => {
+ipcMain.on('quit', () => {
   const template = [
     {
       label: '退出',

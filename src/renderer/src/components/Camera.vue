@@ -2,10 +2,14 @@
 import { onMounted } from 'vue'
 // import useSetting from '../hooks/useSetting'
 import { useConfigStore } from '@renderer/store/useConfigStore'
+import useDrag from '../hooks/useDrag'
 
 const { config } = useConfigStore()
+const { drag } = useDrag()
+drag.run()
 onMounted(() => {
   // Put variables in global scope to make them available to the browser console.
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const video = document.querySelector('video')!
   const constraints = {
     audio: false,

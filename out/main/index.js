@@ -3,7 +3,7 @@ const electron = require("electron");
 const path = require("path");
 const utils = require("@electron-toolkit/utils");
 const icon = path.join(__dirname, "../../resources/icon.png");
-electron.ipcMain.on("quit", (event) => {
+electron.ipcMain.on("quit", () => {
   const template = [
     {
       label: "退出",
@@ -14,6 +14,11 @@ electron.ipcMain.on("quit", (event) => {
   ];
   const menu = electron.Menu.buildFromTemplate(template);
   menu.popup();
+});
+electron.ipcMain.handle("drag", (e, opt) => {
+  const win = electron.BrowserWindow.fromWebContents(e.sender);
+  const [x, y] = win.getPosition();
+  win.setPosition(x + opt.x, y + opt.y);
 });
 function createWindow() {
   const mainWindow = new electron.BrowserWindow({
@@ -44,7 +49,8 @@ function createWindow() {
     electron.shell.openExternal(details.url);
     return { action: "deny" };
   });
-  mainWindow.webContents.openDevTools();
+  if (utils.is.dev)
+    mainWindow.webContents.openDevTools();
   if (utils.is.dev && process.env["ELECTRON_RENDERER_URL"]) {
     mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   } else {

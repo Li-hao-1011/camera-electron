@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import './ipcMain'
+import './drag'
 
 function createWindow(): void {
   // Create the browser window.
@@ -38,7 +39,7 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  mainWindow.webContents.openDevTools()
+  if (is.dev) mainWindow.webContents.openDevTools()
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.

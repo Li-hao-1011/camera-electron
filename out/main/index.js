@@ -20,6 +20,18 @@ electron.ipcMain.handle("drag", (e, opt) => {
   const [x, y] = win.getPosition();
   win.setPosition(x + opt.x, y + opt.y);
 });
+const createTray = () => {
+  let tray = null;
+  tray = new electron.Tray(
+    path.resolve(
+      __dirname,
+      process.platform === "darwin" ? "../../resources/trayTemplate@2x.png" : "../../resources/windowTray.png"
+    )
+  );
+  const contextMenu = electron.Menu.buildFromTemplate([{ label: "退出", role: "quit" }]);
+  tray.setToolTip("This is my application.");
+  tray.setContextMenu(contextMenu);
+};
 function createWindow() {
   const mainWindow = new electron.BrowserWindow({
     width: 300,
@@ -63,6 +75,7 @@ electron.app.whenReady().then(() => {
     utils.optimizer.watchWindowShortcuts(window);
   });
   createWindow();
+  createTray();
   electron.app.on("activate", function() {
     if (electron.BrowserWindow.getAllWindows().length === 0)
       createWindow();

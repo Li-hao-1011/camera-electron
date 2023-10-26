@@ -1,9 +1,10 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import './ipcMain'
 import './drag'
+import createTray from './tray'
 
 function createWindow(): void {
   // Create the browser window.
@@ -28,6 +29,7 @@ function createWindow(): void {
     }
   })
 
+  // 缩放比例
   mainWindow.setAspectRatio(1)
 
   mainWindow.on('ready-to-show', () => {
@@ -39,6 +41,7 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
+  // 开发模式下，打开调试工具
   if (is.dev) mainWindow.webContents.openDevTools()
 
   // HMR for renderer base on electron-vite cli.
@@ -65,6 +68,9 @@ app.whenReady().then(() => {
   })
 
   createWindow()
+
+  // 托盘
+  createTray()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

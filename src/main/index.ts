@@ -21,6 +21,7 @@ function createWindow(): void {
     frame: false,
     transparent: true,
     acceptFirstMouse: true,
+    skipTaskbar: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -68,7 +69,6 @@ app.whenReady().then(() => {
   })
 
   createWindow()
-
   // 托盘
   createTray()
 
@@ -78,6 +78,8 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
+// 隐藏图标
+app.dock.hide()
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

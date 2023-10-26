@@ -46,6 +46,7 @@ function createWindow() {
     frame: false,
     transparent: true,
     acceptFirstMouse: true,
+    skipTaskbar: false,
     autoHideMenuBar: true,
     ...process.platform === "linux" ? { icon } : {},
     webPreferences: {
@@ -81,6 +82,7 @@ electron.app.whenReady().then(() => {
       createWindow();
   });
 });
+electron.app.dock.hide();
 electron.app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     electron.app.quit();
